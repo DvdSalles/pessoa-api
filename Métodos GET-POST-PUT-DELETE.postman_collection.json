@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "20f7b029-7563-422e-9d1c-6ff0a8760100",
+		"name": "Métodos GET/POST/PUT/DELETE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /pessoa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/pessoa",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /pessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"nome\": \"Walter White\",\r\n        \"dataNascimento\": \"1958-09-07\",\r\n        \"cpf\": \"99999999991\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/pessoa",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /pessoa/id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Walter 'Heisenberg' White\",\r\n    \"dataNascimento\": \"1958-09-07\",\r\n    \"cpf\": \"19881521619\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/pessoa/4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pessoa",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /pessoa/id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/pessoa/6",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pessoa",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /contato",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contato",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contato"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /contato/idPessoa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contato/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contato",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /contato/idPessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"tipoContato\": \"COMERCIAL\",\r\n        \"numero\": \"99999999\",\r\n        \"descricao\": \"Funcionou!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/contato/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contato",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /contato/idContato",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"idPessoa\": 2,\r\n        \"tipoContato\": \"COMERCIAL\",\r\n        \"numero\": \"057651189612\",\r\n        \"descricao\": \"Funcionou!\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/contato/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contato",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /contato/idContato",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/contato/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"contato",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /endereco",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/endereco",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /endereco/idEndereco",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/endereco/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /endereco/idPessoa/pessoa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/endereco/2/pessoa",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"endereco",
+						"2",
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /endereco/idPessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"tipo\": \"COMERCIAL\",\r\n        \"logradouro\": \"Rua das Ruas\",\r\n        \"numero\": 55,\r\n        \"complemento\": \"Casa\",\r\n        \"cep\": \"72887998\",\r\n        \"cidade\": \"Lagoinha\",\r\n        \"estado\": \"DF\",\r\n        \"pais\": \"Brasil\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/endereco/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /endereco/idEndereco",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPessoa\": 1,\r\n    \"tipo\": \"RESIDENCIAL\",\r\n    \"logradouro\": \"Rua do Código Funcionando\",\r\n    \"numero\": 70,\r\n    \"complemento\": \"Casa\",\r\n    \"cep\": \"72888888\",\r\n    \"cidade\": \"Patos de Minas\",\r\n    \"estado\": \"MG\",\r\n    \"pais\": \"Brasil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/endereco/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /endereco/idEndereco",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/endereco/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
