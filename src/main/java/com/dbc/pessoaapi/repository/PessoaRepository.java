@@ -18,10 +18,10 @@ public class PessoaRepository {
 
 
     public PessoaRepository() {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //18/10/2020
-//        listaPessoaEntities.add(new PessoaEntity(COUNTER.incrementAndGet(), "Maicon Gerardi", LocalDate.parse("10/10/1990", formatter), "12345678910"));
-//        listaPessoaEntities.add(new PessoaEntity(COUNTER.incrementAndGet(), "David Salles", LocalDate.parse("03/09/1988", formatter), "12345678911"));
-//        listaPessoaEntities.add(new PessoaEntity(COUNTER.incrementAndGet(), "Fulaninho de Tal", LocalDate.parse("15/08/1989", formatter), "12345678912"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //18/10/2020
+        listaPessoaEntities.add(new PessoaEntity(COUNTER.incrementAndGet(), "Maicon Gerardi", LocalDate.parse("10/10/1990", formatter), "12345678910", "fulano@gmail.com"));
+        listaPessoaEntities.add(new PessoaEntity(COUNTER.incrementAndGet(), "David Salles", LocalDate.parse("03/09/1988", formatter), "12345678911", "fulano@gmail.com"));
+        listaPessoaEntities.add(new PessoaEntity(COUNTER.incrementAndGet(), "Fulaninho de Tal", LocalDate.parse("15/08/1989", formatter), "12345678912", "fulano@gmail.com"));
     }
 
     public PessoaEntity create(PessoaEntity pessoaEntity) {

@@ -59,6 +59,11 @@ public class PessoaController {
         return pessoaService.list();
     }
 
+    @GetMapping("/idPessoa")
+    public PessoaDTO buscarPorId(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
+       return pessoaService.getById(id);
+    }
+
 
     @ApiOperation(value = "Faz uma busca de pessoa pelo nome.")
     @ApiResponses(value = {
