@@ -27,4 +27,14 @@ public class DadosPessoaisController {
     public DadosPessoaisDTO post(@RequestBody DadosPessoaisDTO dadosPessoaisDTO) {
         return dadosPessoaisService.post(dadosPessoaisDTO);
     }
+
+    @PutMapping("/atualizar-por-cpf")
+    public DadosPessoaisDTO update(@RequestParam("CPF") String cpf,@RequestBody DadosPessoaisDTO dadosPessoaisDTO) {
+        return dadosPessoaisService.update(dadosPessoaisDTO, cpf);
+    }
+
+    @DeleteMapping("/deletar-por-cpf")
+    public void delete(@RequestParam("CPF") String cpf) {
+        dadosPessoaisService.delete(cpf);
+    }
 }

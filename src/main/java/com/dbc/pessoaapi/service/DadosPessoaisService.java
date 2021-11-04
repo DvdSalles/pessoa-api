@@ -28,4 +28,12 @@ public class DadosPessoaisService {
     public DadosPessoaisDTO post(DadosPessoaisDTO dadosPessoaisDTO) {
         return dadosPessoaisClient.createDadosPessoais(dadosPessoaisDTO);
     }
+
+    public DadosPessoaisDTO update(DadosPessoaisDTO dadosPessoaisDTO, String cpf) {
+        return dadosPessoaisClient.update(cpf, dadosPessoaisDTO);
+    }
+
+    public void delete(String cpf) {
+        dadosPessoaisClient.delete(cpf);
+    }
 }
