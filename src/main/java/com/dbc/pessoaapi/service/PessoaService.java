@@ -31,6 +31,7 @@ public class PessoaService {
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
         PessoaEntity pessoaCriada = pessoaRepository.create(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaCriada, PessoaDTO.class);
+        dadosPessoaisClient.createDadosPessoais(pessoaDTO.getDadosPessoaisDTO());
 //        emailService.enviarEmailComTemplate(pessoaDTO);
 
         return pessoaDTO;
@@ -53,16 +54,19 @@ public class PessoaService {
     public PessoaDTO update(Integer id,
                                PessoaCreateDTO pessoaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
+        DadosPessoaisDTO dadosPessoaisDTO = dadosPessoaisClient.update(pessoaEntity.getCpf(), pessoaEntity.getDadosPessoaisDTO());
         PessoaEntity pessoaAtualizada = pessoaRepository.update(id, pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
 //        emailService.enviarEmailComTemplateUpdate(pessoaDTO);
+        pessoaDTO.setDadosPessoaisDTO(dadosPessoaisDTO);
         return pessoaDTO;
     }
 
     public void delete(Integer id) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
         PessoaEntity pessoaDeletada = pessoaRepository.buscarPorId(id);
+        dadosPessoaisClient.delete(pessoaDeletada.getCpf());
         pessoaRepository.delete(id);
-        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaDeletada, PessoaDTO.class);
+//        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaDeletada, PessoaDTO.class);
 //        emailService.enviarEmailComTemplateDelete(pessoaDTO);
     }
 

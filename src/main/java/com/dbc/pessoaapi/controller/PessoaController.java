@@ -1,5 +1,6 @@
 package com.dbc.pessoaapi.controller;
 
+import com.dbc.pessoaapi.dto.DadosPessoaisDTO;
 import com.dbc.pessoaapi.dto.PessoaCreateDTO;
 import com.dbc.pessoaapi.dto.PessoaDTO;
 import com.dbc.pessoaapi.entity.PessoaEntity;
@@ -59,7 +60,7 @@ public class PessoaController {
         return pessoaService.list();
     }
 
-    @GetMapping("/idPessoa")
+    @GetMapping("/{idPessoa}")
     public PessoaDTO buscarPorId(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
        return pessoaService.getById(id);
     }

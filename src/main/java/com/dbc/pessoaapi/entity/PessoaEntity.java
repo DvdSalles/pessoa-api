@@ -1,5 +1,6 @@
 package com.dbc.pessoaapi.entity;
 
+import com.dbc.pessoaapi.dto.DadosPessoaisDTO;
 import lombok.*;
 
 import javax.validation.constraints.*;
@@ -16,5 +17,6 @@ public class PessoaEntity {
     private LocalDate dataNascimento;
     private String cpf;
     private String email;
+    private DadosPessoaisDTO dadosPessoaisDTO;
 
 }
