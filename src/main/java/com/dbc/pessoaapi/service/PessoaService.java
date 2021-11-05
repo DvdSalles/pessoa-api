@@ -28,10 +28,10 @@ public class PessoaService {
 
 
     public PessoaDTO create(PessoaCreateDTO pessoaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
+        dadosPessoaisClient.createDadosPessoais(pessoaCreateDTO.getDadosPessoaisDTO());
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
         PessoaEntity pessoaCriada = pessoaRepository.create(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaCriada, PessoaDTO.class);
-        dadosPessoaisClient.createDadosPessoais(pessoaDTO.getDadosPessoaisDTO());
         pessoaDTO.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoaEntity.getCpf()));
 //        emailService.enviarEmailComTemplate(pessoaDTO);
         return pessoaDTO;
@@ -57,6 +57,7 @@ public class PessoaService {
 
     public PessoaDTO update(Integer id,
                                PessoaCreateDTO pessoaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
+        dadosPessoaisClient.update(pessoaCreateDTO.getCpf() ,pessoaCreateDTO.getDadosPessoaisDTO());
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
         PessoaEntity pessoaAtualizada = pessoaRepository.update(id, pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
