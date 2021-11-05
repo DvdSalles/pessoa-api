@@ -44,7 +44,6 @@ public class PessoaRepository {
         pessoaEntityRecuperada.setNome(pessoaEntityAtualizar.getNome());
         pessoaEntityRecuperada.setDataNascimento(pessoaEntityAtualizar.getDataNascimento());
         pessoaEntityRecuperada.setEmail(pessoaEntityAtualizar.getEmail());
-        pessoaEntityRecuperada.setDadosPessoaisDTO(pessoaEntityAtualizar.getDadosPessoaisDTO());
         return pessoaEntityRecuperada;
     }
 

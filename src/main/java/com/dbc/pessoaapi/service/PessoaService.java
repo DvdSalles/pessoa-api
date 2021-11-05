@@ -32,14 +32,18 @@ public class PessoaService {
         PessoaEntity pessoaCriada = pessoaRepository.create(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaCriada, PessoaDTO.class);
         dadosPessoaisClient.createDadosPessoais(pessoaDTO.getDadosPessoaisDTO());
+        pessoaDTO.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoaEntity.getCpf()));
 //        emailService.enviarEmailComTemplate(pessoaDTO);
-
         return pessoaDTO;
     }
 
     public List<PessoaDTO> list(){
         return pessoaRepository.list().stream()
-                .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))
+                .map(pessoa -> {
+                   PessoaDTO dto = objectMapper.convertValue(pessoa, PessoaDTO.class);
+                   dto.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoa.getCpf()));
+                   return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -54,11 +58,10 @@ public class PessoaService {
     public PessoaDTO update(Integer id,
                                PessoaCreateDTO pessoaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
-        DadosPessoaisDTO dadosPessoaisDTO = dadosPessoaisClient.update(pessoaEntity.getCpf(), pessoaEntity.getDadosPessoaisDTO());
         PessoaEntity pessoaAtualizada = pessoaRepository.update(id, pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
+        pessoaDTO.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoaEntity.getCpf()));
 //        emailService.enviarEmailComTemplateUpdate(pessoaDTO);
-        pessoaDTO.setDadosPessoaisDTO(dadosPessoaisDTO);
         return pessoaDTO;
     }
 
@@ -72,8 +75,12 @@ public class PessoaService {
 
     public List<PessoaDTO> listByName(String nome) {
         return pessoaRepository.list().stream()
-                .filter(pessoaEntity -> pessoaEntity.getNome().toUpperCase().contains(nome.toUpperCase()))
-                .map(pessoaEntity -> objectMapper.convertValue(pessoaEntity, PessoaDTO.class))
+                .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
+                .map(pessoa -> {
+                    PessoaDTO dto = objectMapper.convertValue(pessoa, PessoaDTO.class);
+                    dto.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoa.getCpf()));
+                    return dto;
+                })
                 .collect(Collectors.toList());
 
     }
