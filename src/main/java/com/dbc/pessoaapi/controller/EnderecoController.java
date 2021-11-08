@@ -2,7 +2,6 @@ package com.dbc.pessoaapi.controller;
 
 import com.dbc.pessoaapi.dto.EnderecoCreateDTO;
 import com.dbc.pessoaapi.dto.EnderecoDTO;
-import com.dbc.pessoaapi.entity.EnderecoEntity;
 import com.dbc.pessoaapi.exceptions.RegraDeNegocioException;
 import com.dbc.pessoaapi.service.EnderecoService;
 import io.swagger.annotations.ApiOperation;
@@ -10,7 +9,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,16 +34,16 @@ public class EnderecoController {
     }
 
 
-    @ApiOperation(value = "Fornece uma lista de endereços correspondente à pessoa do id inserido.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Deu certo! O comando funcionou."),
-            @ApiResponse(code = 400, message = "Pessoa não encontrada."),
-            @ApiResponse(code = 500, message = "Problema interno no sistema."),
-    })
-    @GetMapping("/{idPessoa}/pessoa")
-    public List<EnderecoDTO> listEnderecoPorPessoa(@PathVariable("idPessoa")Integer idPessoa) {
-        return enderecoService.listEnderecoPorPessoa(idPessoa);
-    }
+//    @ApiOperation(value = "Fornece uma lista de endereços correspondente à pessoa do id inserido.")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Deu certo! O comando funcionou."),
+//            @ApiResponse(code = 400, message = "Pessoa não encontrada."),
+//            @ApiResponse(code = 500, message = "Problema interno no sistema."),
+//    })
+//    @GetMapping("/{idPessoa}/pessoa")
+//    public List<EnderecoDTO> listEnderecoPorPessoa(@PathVariable("idPessoa")Integer idPessoa) {
+//        return enderecoService.listEnderecoPorPessoa(idPessoa);
+//    }
 
 
     @ApiOperation(value = "Busca um endereço pelo id de endereço.")
@@ -56,7 +54,7 @@ public class EnderecoController {
     })
     @GetMapping("/{idEndereco}")
     public EnderecoDTO listEnderecoPorId(@PathVariable("idEndereco") Integer idEndereco) throws RegraDeNegocioException {
-        return enderecoService.listEnderecoPorId(idEndereco);
+        return enderecoService.getById(idEndereco);
     }
 
 
@@ -66,11 +64,10 @@ public class EnderecoController {
             @ApiResponse(code = 400, message = "Há dados inseridos incorretamente ou pessoa não encontrada."),
             @ApiResponse(code = 500, message = "Problema interno no sistema."),
     })
-    @PostMapping("/{idPessoa}")
-    public EnderecoDTO create(@PathVariable("idPessoa") Integer idPessoa,
-                                 @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
+    @PostMapping
+    public EnderecoDTO create(@RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
         log.info("Criando endereço.");
-        EnderecoDTO enderecoDTO1 = enderecoService.create(idPessoa, enderecoCreateDTO);
+        EnderecoDTO enderecoDTO1 = enderecoService.create(enderecoCreateDTO);
         log.info("Endereço criado com sucesso.");
         return enderecoDTO1;
     }

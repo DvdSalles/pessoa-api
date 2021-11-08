@@ -30,56 +30,55 @@ public class PessoaService {
     public PessoaDTO create(PessoaCreateDTO pessoaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
         dadosPessoaisClient.createDadosPessoais(pessoaCreateDTO.getDadosPessoaisDTO());
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
-        PessoaEntity pessoaCriada = pessoaRepository.create(pessoaEntity);
+        PessoaEntity pessoaCriada = pessoaRepository.save(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaCriada, PessoaDTO.class);
-        pessoaDTO.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoaEntity.getCpf()));
 //        emailService.enviarEmailComTemplate(pessoaDTO);
         return pessoaDTO;
     }
 
+    private PessoaEntity findById(Integer id) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaRepository.findById(id)
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada."));
+        return pessoaEntity;
+    }
+
     public List<PessoaDTO> list(){
-        return pessoaRepository.list().stream()
+        return pessoaRepository.findAll().stream()
                 .map(pessoa -> {
                    PessoaDTO dto = objectMapper.convertValue(pessoa, PessoaDTO.class);
-                   dto.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoa.getCpf()));
                    return dto;
                 })
                 .collect(Collectors.toList());
     }
 
     public PessoaDTO getById(Integer id) throws RegraDeNegocioException {
-        PessoaEntity entity = pessoaRepository.buscarPorId(id);
-        DadosPessoaisDTO dadosPessoaisDTO = dadosPessoaisClient.getPorCpf(entity.getCpf());
+        PessoaEntity entity = findById(id);
         PessoaDTO dto = objectMapper.convertValue(entity, PessoaDTO.class);
-        dto.setDadosPessoaisDTO(dadosPessoaisDTO);
         return dto;
     }
 
     public PessoaDTO update(Integer id,
                                PessoaCreateDTO pessoaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
-        dadosPessoaisClient.update(pessoaCreateDTO.getCpf() ,pessoaCreateDTO.getDadosPessoaisDTO());
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
-        PessoaEntity pessoaAtualizada = pessoaRepository.update(id, pessoaEntity);
+        pessoaEntity.setIdPessoa(id);
+        PessoaEntity pessoaAtualizada = pessoaRepository.save(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
-        pessoaDTO.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoaEntity.getCpf()));
 //        emailService.enviarEmailComTemplateUpdate(pessoaDTO);
         return pessoaDTO;
     }
 
     public void delete(Integer id) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
-        PessoaEntity pessoaDeletada = pessoaRepository.buscarPorId(id);
-        dadosPessoaisClient.delete(pessoaDeletada.getCpf());
-        pessoaRepository.delete(id);
+        PessoaEntity pessoaDeletada = findById(id);
+        pessoaRepository.delete(pessoaDeletada);
 //        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaDeletada, PessoaDTO.class);
 //        emailService.enviarEmailComTemplateDelete(pessoaDTO);
     }
 
     public List<PessoaDTO> listByName(String nome) {
-        return pessoaRepository.list().stream()
+        return pessoaRepository.findAll().stream()
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
                 .map(pessoa -> {
                     PessoaDTO dto = objectMapper.convertValue(pessoa, PessoaDTO.class);
-                    dto.setDadosPessoaisDTO(dadosPessoaisClient.getPorCpf(pessoa.getCpf()));
                     return dto;
                 })
                 .collect(Collectors.toList());

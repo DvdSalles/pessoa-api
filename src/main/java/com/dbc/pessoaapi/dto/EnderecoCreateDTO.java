@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 
 @Data
 public class EnderecoCreateDTO {
-    @ApiModelProperty(value = "Id da pessoa")
-    private Integer idPessoa;
+//    @ApiModelProperty(value = "Id da pessoa")
+//    private Integer idPessoa;
     @NotNull
     @ApiModelProperty(value = "Tipo de endereço")
     private TipoEndereco tipo;
@@ -37,6 +37,7 @@ public class EnderecoCreateDTO {
     private String cidade;
     @NotEmpty
     @NotNull
+    @Size(max = 2, min = 2, message = "Estado deve ser inserido no formato de sigla, apenas 2 caracteres.")
     @ApiModelProperty(value = "Estado")
     private String estado;
     @NotEmpty
