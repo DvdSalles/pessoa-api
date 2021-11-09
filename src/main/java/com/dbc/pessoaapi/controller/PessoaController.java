@@ -5,6 +5,7 @@ import com.dbc.pessoaapi.dto.PessoaCreateDTO;
 import com.dbc.pessoaapi.dto.PessoaDTO;
 import com.dbc.pessoaapi.entity.PessoaEntity;
 import com.dbc.pessoaapi.exceptions.RegraDeNegocioException;
+import com.dbc.pessoaapi.repository.PessoaRepository;
 import com.dbc.pessoaapi.service.PessoaService;
 import freemarker.template.TemplateException;
 import io.swagger.annotations.ApiOperation;
@@ -13,12 +14,14 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,6 +31,7 @@ import java.util.List;
 @Slf4j
 public class PessoaController {
     private final PessoaService pessoaService;
+    private final PessoaRepository pessoaRepository;
 
 
 //    @GetMapping("/hello")
@@ -104,5 +108,21 @@ public class PessoaController {
         log.info("Deletando pessoa.");
         pessoaService.delete(id);
         log.info("Pessoa deletada com sucesso.");
+    }
+
+    @GetMapping("/buscar-nome")
+    public List<PessoaEntity> buscarNome(@RequestParam("nome") String nome) {
+       return pessoaRepository.findByNomeContainsIgnoreCase(nome);
+    }
+
+    @GetMapping("/buscar-cpf")
+    public PessoaEntity buscarCpf(@RequestParam("cpf") String cpf) {
+        return pessoaRepository.findByCpf(cpf);
+    }
+
+    @GetMapping("/buscar-entre-data")
+    public List<PessoaEntity> buscarEntreDatas(@RequestParam("incial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate incial,
+                                               @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim) {
+        return pessoaRepository.findByDataNascimentoBetween(incial, fim);
     }
 }

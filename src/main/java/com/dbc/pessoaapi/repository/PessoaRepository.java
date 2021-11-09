@@ -15,4 +15,7 @@ import java.util.stream.Collectors;
 @Repository
 public interface PessoaRepository extends JpaRepository<PessoaEntity,Integer> {
 
+    List<PessoaEntity> findByNomeContainsIgnoreCase(String nome);
+    PessoaEntity findByCpf(String cpf);
+    List<PessoaEntity> findByDataNascimentoBetween (LocalDate datainicial, LocalDate datafinal);
 }
