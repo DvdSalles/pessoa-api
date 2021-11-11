@@ -227,3 +227,11 @@ VALUES(4, 4);
 INSERT INTO PESSOA_X_PESSOA_ENDERECO
 (ID_PESSOA, ID_ENDERECO)
 VALUES(4, 5);
+
+CREATE TABLE Professor (
+  id_professor NUMBER NOT NULL,
+  id_universidade NUMBER NOT NULL,
+  nome varchar2(255),
+  salario NUMBER(10,2),
+  PRIMARY KEY(id_professor, id_universidade)
+);

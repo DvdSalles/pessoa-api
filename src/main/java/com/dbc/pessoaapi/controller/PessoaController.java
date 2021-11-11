@@ -1,8 +1,6 @@
 package com.dbc.pessoaapi.controller;
 
-import com.dbc.pessoaapi.dto.DadosPessoaisDTO;
-import com.dbc.pessoaapi.dto.PessoaCreateDTO;
-import com.dbc.pessoaapi.dto.PessoaDTO;
+import com.dbc.pessoaapi.dto.*;
 import com.dbc.pessoaapi.entity.PessoaEntity;
 import com.dbc.pessoaapi.exceptions.RegraDeNegocioException;
 import com.dbc.pessoaapi.repository.PessoaRepository;
@@ -13,7 +11,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -124,5 +121,36 @@ public class PessoaController {
     public List<PessoaEntity> buscarEntreDatas(@RequestParam("incial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate incial,
                                                @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim) {
         return pessoaRepository.findByDataNascimentoBetween(incial, fim);
+    }
+
+    @GetMapping("/buscar-pessoa+contato")
+    public List<PessoaComContatoDTO> listarPessoaComContatoComOuSemId(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarPessoaComContatoComOuSemId(idPessoa);
+    }
+
+    @GetMapping("/buscar-pessoa+endereco")
+    public List<PessoaComEnderecoDTO> listarPessoaComEnderecoComOuSemId(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarPessoaComEnderecoComOuSemId(idPessoa);
+    }
+
+    @GetMapping("/buscar-pessoa+contato+endereco")
+    public List<PessoaContatoEnderecoDTO> listarPessoaComContatoEnderecoComOuSemId(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarPessoaComContatoEnderecoComOuSemId(idPessoa);
+    }
+
+    @GetMapping("/buscarEntreDatasDeNascimento")
+    public List<PessoaEntity> buscarNascimentoEntreDatas(@RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+                                                         @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim) {
+        return pessoaRepository.buscarEntreDatasDeNascimento(inicio, fim);
+    }
+
+    @GetMapping("/buscarPessoasComEndereco")
+    public List<PessoaEntity> buscarPessoasComEndereco(){
+        return pessoaRepository.buscarPessoasComEnderecos();
+    }
+
+    @GetMapping("/buscar-pessoas-endereco-null")
+    public List<PessoaEntity> buscarPessoasComEnderecoNull() {
+        return pessoaRepository.buscarPessoasComEnderecoNull();
     }
 }

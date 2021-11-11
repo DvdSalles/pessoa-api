@@ -1,11 +1,13 @@
 package com.dbc.pessoaapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,4 +39,8 @@ public class EnderecoEntity {
     private String estado;
     @Column(name = "pais")
     private String pais;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "enderecos")
+    private Set<PessoaEntity> pessoas;
 }

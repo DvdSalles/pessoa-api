@@ -2,7 +2,9 @@ package com.dbc.pessoaapi.controller;
 
 import com.dbc.pessoaapi.dto.EnderecoCreateDTO;
 import com.dbc.pessoaapi.dto.EnderecoDTO;
+import com.dbc.pessoaapi.entity.EnderecoEntity;
 import com.dbc.pessoaapi.exceptions.RegraDeNegocioException;
+import com.dbc.pessoaapi.repository.EnderecoRepository;
 import com.dbc.pessoaapi.service.EnderecoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/endereco")
@@ -22,6 +25,7 @@ import java.util.List;
 @Slf4j
 public class EnderecoController {
     private final EnderecoService enderecoService;
+    private final EnderecoRepository enderecoRepository;
 
     @ApiOperation(value = "Fornece uma lista com todos os endereços cadastrados.")
     @ApiResponses(value = {
@@ -100,5 +104,26 @@ public class EnderecoController {
         log.info("Deletando endereço");
         enderecoService.delete(idEndereco);
         log.info("Endereço deletado com sucesso.");
+    }
+
+    @GetMapping("/endereco-por-pais")
+    public List<EnderecoEntity> listarEnderecosPorPais(@RequestParam String pais) {
+        return enderecoRepository.procurarPorPais(pais);
+    }
+
+    @GetMapping("/endereco-por-idpesssoa")
+    public List<EnderecoEntity> listarEnderecoPorIdPessoa(@RequestParam Integer idPessoa) {
+        return enderecoRepository.procurarPorIdPessoa(idPessoa);
+    }
+
+    @GetMapping("/endereco-cidade-ou-pais")
+    public List<EnderecoEntity> enderecoPorCidadeOuPais(@RequestParam(value = "cidade", required = false) String cidade,
+                                                        @RequestParam(value = "pais", required = false) String pais) {
+        return enderecoRepository.enderecoPorCidadeOuPais(cidade, pais);
+    }
+
+    @GetMapping("/endereco-sem-complemento")
+    public List<EnderecoEntity> enderecoSemComplemento(){
+        return enderecoRepository.enderecoSemComplemento();
     }
 }

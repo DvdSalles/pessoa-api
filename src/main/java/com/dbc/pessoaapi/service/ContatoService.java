@@ -3,6 +3,7 @@ package com.dbc.pessoaapi.service;
 import com.dbc.pessoaapi.dto.ContatoCreateDTO;
 import com.dbc.pessoaapi.dto.ContatoDTO;
 import com.dbc.pessoaapi.entity.ContatoEntity;
+import com.dbc.pessoaapi.entity.PessoaEntity;
 import com.dbc.pessoaapi.exceptions.RegraDeNegocioException;
 import com.dbc.pessoaapi.repository.ContatoRepository;
 import com.dbc.pessoaapi.repository.PessoaRepository;
@@ -28,9 +29,9 @@ public class ContatoService {
 
 
     public ContatoDTO create(Integer idPessoa, ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
-        pessoaRepository.getById(idPessoa);
+        PessoaEntity pessoa = pessoaRepository.getById(idPessoa);
         ContatoEntity contatoEntity = objectMapper.convertValue(contatoCreateDTO, ContatoEntity.class);
-        contatoEntity.setIdPessoa(idPessoa);
+        contatoEntity.setPessoaEntity(pessoa);
         ContatoEntity contatoCriado = contatoRepository.save(contatoEntity);
         return objectMapper.convertValue(contatoCriado, ContatoDTO.class);
     }
@@ -43,7 +44,7 @@ public class ContatoService {
 
     public List<ContatoDTO> listPorIdPessoa(Integer idPessoa) {
         return contatoRepository.findAll().stream()
-                .filter(contatoEntity -> contatoEntity.getIdPessoa().equals(idPessoa))
+                .filter(contatoEntity -> contatoEntity.getPessoaEntity().getIdPessoa().equals(idPessoa))
                 .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
                 .collect(Collectors.toList());
     }

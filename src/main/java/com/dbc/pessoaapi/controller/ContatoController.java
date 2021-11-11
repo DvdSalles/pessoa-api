@@ -3,7 +3,9 @@ package com.dbc.pessoaapi.controller;
 import com.dbc.pessoaapi.dto.ContatoCreateDTO;
 import com.dbc.pessoaapi.dto.ContatoDTO;
 import com.dbc.pessoaapi.entity.ContatoEntity;
+import com.dbc.pessoaapi.entity.TipoContato;
 import com.dbc.pessoaapi.exceptions.RegraDeNegocioException;
+import com.dbc.pessoaapi.repository.ContatoRepository;
 import com.dbc.pessoaapi.service.ContatoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,6 +25,7 @@ import java.util.List;
 @Slf4j
 public class ContatoController {
     private final ContatoService contatoService;
+    private final ContatoRepository contatoRepository;
 
     @ApiOperation(value = "Cria um contato na pessoa referente ao id inserido.")
     @ApiResponses(value = {
@@ -90,6 +93,16 @@ public class ContatoController {
         log.info("Deletando contato.");
         contatoService.delete(idContato);
         log.info("Contato deletado com sucesso.");
+    }
+
+    @GetMapping("/contato-por-tipo")
+    public List<ContatoEntity> listarContatosPorTipo(@RequestParam TipoContato tipo) {
+        return contatoRepository.contatosPorTipoContato(tipo);
+    }
+
+    @GetMapping("/contato-por-idpessoa")
+    public List<ContatoEntity> buscarContatoPorIdPessoa(@RequestParam Integer idPessoa) {
+        return contatoRepository.contatosPorIdPessoa(idPessoa);
     }
 
 
